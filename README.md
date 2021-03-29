@@ -3,6 +3,9 @@
 A light wrapper of react components for [chartscss](https://chartscss.org). This
 library attempts to create utility components around the framework.
 
+## Install
+`npm i charts-css-react`
+
 ## Motivation
 
 [accessibility](https://github.com/ChartsCSS/charts.css/issues/13)
