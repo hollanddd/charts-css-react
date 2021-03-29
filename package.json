@@ -21,15 +21,21 @@
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build"
+    "deploy": "gh-pages -d example/build",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "peerDependencies": {
-    "react": "^17.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.11.0",
     "@babel/eslint-parser": "^7.13.14",
     "@babel/plugin-transform-regenerator": "^7.12.13",
+    "@storybook/addon-actions": "^6.1.21",
+    "@storybook/addon-essentials": "^6.1.21",
+    "@storybook/addon-links": "^6.1.21",
+    "@storybook/preset-create-react-app": "^3.1.7",
+    "@storybook/react": "^6.1.21",
     "@testing-library/dom": "^7.30.1",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/user-event": "^7.2.1",
@@ -62,5 +68,6 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {}
 }
