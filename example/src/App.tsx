@@ -5,7 +5,7 @@ import 'charts-css-react/dist/index.css'
 
 const App = () => {
   return (
-    <Chart type="area" heading="Example Chart">
+    <Chart type="area" heading="Example Chart" style={{height: '200px'}}>
       <tr>
         <Data start="0.2" size="0.4" />
       </tr>

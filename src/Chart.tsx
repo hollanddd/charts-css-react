@@ -1,5 +1,6 @@
 import * as React from 'react'
 import './index.css'
+import './Chart.module.scss'
 /**
  * Available chart types provided by chart.css
  *
