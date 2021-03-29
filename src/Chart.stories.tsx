@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react'
 import { Story, Meta } from '@storybook/react/types-6-0'
 
-import { Chart, ChartProps, Data, Tip } from './index'
+import { Chart, ChartProps, Data, Tip } from './'
 
 export default {
   title: 'ChartCSS/Chart',
