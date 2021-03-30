@@ -4,6 +4,7 @@ A light wrapper of react components for [chartscss](https://chartscss.org). This
 library attempts to create utility components around the framework.
 
 ## Install
+
 `npm i charts-css-react`
 
 ## Motivation
@@ -15,9 +16,10 @@ library attempts to create utility components around the framework.
 For details on using the css utility framework please see the Charts.css
 [website](https://chartscss.org/docs/usage/)
 
-### Simple Chart
+### Chart
 
-The default chart is a bar chart.
+The base for all charts. It is possible to create charts by hand using the
+following example. The default chart is a bar chart.
 
 ```typescript
 import { CSSProperties } from 'react';
@@ -35,27 +37,32 @@ import { Chart } from 'hollanddd/chart-css-react';
 </Chart>
 ```
 
-### Chart With Data Component
+### Data Component
 
-The `Data` component converts properties to the `CSSProperties` type required by
-style. `size` is a string of css `calc()` function or float "0.0" to "1.0".
+The `Data` component is a wrapper around `td` and performs some functions such
+as converting size to the `CSSProperties` type required by style.
+
+- `size` is a string of css `calc()` function or float "0.0" to "1.0".
+- `toolTip` optional message to display on hover
 
 ```typescript
 import { Chart, Data } from 'hollanddd/chart-css-react';
 
 <Chart>
   <tr>
-    <th scope="row">Four</th>
+    <th scope="row">One</th>
     <Data size="calc(90/100)">$90k</Data>
   </tr>
   <tr>
-    <th scope="row">Five</th>
-    <Data>$100k</Data>
+    <th scope="row">Two</th>
+    <Data toolTip="this is a tooltip">$100k</Data>
   </tr>
 </Chart>
 ```
 
 It's possible to use the data component with the `area` and `line` chart type.
+
+- `start` defines starting point of attribute
 
 ```typescript
 import { Chart, Data } from 'hollanddd/chart-css-react';
@@ -86,7 +93,7 @@ import { CSSProperties } from 'react';
 import { Chart, Legend, Header } from 'hollanddd/chart-css-react';
 
 <div id="my-chart">
-  <Legend labels={['USA', 'GBR', 'CHN']}/>
+  <Legend labels={['Gold', 'Silver', 'Bronze']}/>
   <Chart heading="My Chart Heading">
     <Header labels={['Country', 'Gold', 'Silver', 'Bronze']} />
     <tr>

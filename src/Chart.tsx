@@ -20,12 +20,6 @@ export type ChartTypes =
  */
 export interface IChartProps extends React.HTMLAttributes<HTMLTableElement> {
   /**
-   * The type of chart.
-   *
-   * @default bar
-   */
-  type?: ChartTypes
-  /**
    * The heading to apply to the chart.
    *
    * @default
@@ -115,7 +109,14 @@ export interface IChartProps extends React.HTMLAttributes<HTMLTableElement> {
 /**
  * Properties of a new chart
  */
-export interface ChartProps extends IChartProps {}
+export interface ChartProps extends IChartProps {
+  /**
+   * The type of chart.
+   *
+   * @default bar
+   */
+  type: ChartTypes
+}
 /**
  * Charts.css is an open source CSS framework for data visualization.
  *
@@ -197,6 +198,16 @@ export interface DataProps
    * @default none
    */
   value?: string
+  /**
+   * Hidable. css class contains hide-data
+   *
+   * @default false
+   */
+  hidable?: boolean
+  /**
+   * Tooltip message to display
+   */
+  toolTip?: string
 }
 /**
  * Data for a single chart element as represented by a `<td>` element.
@@ -207,18 +218,86 @@ export interface DataProps
 export const Data: React.FC<DataProps> = ({
   size,
   start,
+  hidable,
+  toolTip,
+  value,
   children,
   ...rest
 }) => {
   const style = { '--size': size, '--start': start }
   return (
     <td style={style as React.CSSProperties} {...rest}>
-      {children}
+      {toolTip ? <Tip>{toolTip}</Tip> : ''}
+      {value ? (
+        hidable ? (
+          <span className='data'>{value}</span>
+        ) : (
+          value.toString()
+        )
+      ) : (
+        children
+      )}
     </td>
   )
 }
 /**
- * Tooltip
+ * Represents a chart row
+ */
+export interface RowProps extends React.HTMLAttributes<HTMLTableRowElement> {
+  /**
+   * Label to apply to data row
+   */
+  label?: string
+  /**
+   * Data to display in row
+   */
+  data: number | number[]
+  /**
+   * Max value of chart.
+   *
+   * Use to calculate chart dimensions
+   *
+   * @default 0
+   */
+  max?: number
+  /**
+   * Hidable. css class contains hide-data and show-data-on-hover
+   *
+   * @default false
+   */
+  hidable?: boolean
+}
+/**
+ * Row for a chart
+ */
+export const Row: React.FC<RowProps> = ({
+  label,
+  data,
+  max,
+  hidable,
+  children
+}) => {
+  data = typeof data === 'number' ? [data] : data
+  max = max ?? Math.max(...data)
+  return (
+    <tr>
+      {label ? <th scope='row'>{label}</th> : ''}
+      {data
+        ? data.map((v, i) => (
+            <Data
+              key={i}
+              size={`calc(${v}/${max})`}
+              value={v.toString()}
+              hidable={hidable}
+            />
+          ))
+        : ''}
+      {children}
+    </tr>
+  )
+}
+/**
+ * Tool tip
  */
 export const Tip: React.FC<{}> = ({ children }) => (
   <span className='tooltip'>{children}</span>
@@ -302,3 +381,108 @@ export const Header: React.FC<{ labels: string[] }> = ({ labels }) => (
     </tr>
   </thead>
 )
+/**
+ * Represents series data
+ */
+export interface SeriesData {
+  /**
+   * Label to apply to chart row
+   */
+  label: string
+  /**
+   * Value to apply to table data
+   */
+  value: number
+}
+
+/**
+ * Represents the properties of a new bar chart
+ */
+export interface BarChartProps extends IChartProps {
+  /**
+   * The data property of a dataset for a bar chart is specified as an array of
+   * numbers. Each point in the data array corresponds to the label at the same
+   * index on the x axis.
+   *
+   *   data: [20, 10]
+   *
+   * Creates stacked bar chart.
+   *
+   *   data: [[5,6], [-3,-6]]
+   *
+   * @default []
+   */
+  data?: number[] | number[][]
+  /**
+   * Override max derived from provided data. Useful for associating max to
+   * stacked charts
+   */
+  max?: number
+  /**
+   * Specify the dataset as series data
+   *
+   *   data: [{label:'2016-12-25', value:20}, {label:'2016-12-26', value:10}]
+   *
+   * @default none
+   */
+  seriesData?: SeriesData[]
+}
+/**
+ * Bar Chart
+ *
+ * Creates a bar chart. Providing optional data array will generate chart. Defer
+ * to child nodes when no data provided.
+ *
+ */
+export const BarChart: React.FC<BarChartProps> = ({
+  data = [],
+  max,
+  seriesData,
+  children,
+  ...props
+}) => {
+  const rows: React.ReactNode[] = []
+  const datumType = Array.isArray(data[0]) ? 'array' : typeof data[0]
+  switch (datumType) {
+    case 'array': {
+      props.multiple = true
+      const collection = (data as number[][]).map((v: number[], i: number) => {
+        return <Row key={i} data={v} max={max} hidable={props.hideData} />
+      })
+      rows.push(collection)
+      break
+    }
+    case 'number': {
+      max = max ?? Math.max(...(data as number[]))
+      const collection = (data as number[]).map((v: number, i: number) => {
+        return <Row key={i} data={v} max={max} hidable={props.hideData} />
+      })
+      rows.push(collection)
+      break
+    }
+    default:
+      break
+  }
+  if (seriesData) {
+    props.label = true
+    const values = seriesData.map(({ value }) => value)
+    max = max ?? Math.max(...values)
+    const collection = seriesData.map(({ label, value }) => {
+      return (
+        <Row
+          key={label}
+          label={label}
+          data={value}
+          max={max}
+          hidable={props.hideData}
+        />
+      )
+    })
+    rows.push(collection)
+  }
+  return (
+    <Chart type='bar' {...props}>
+      {rows || children}
+    </Chart>
+  )
+}

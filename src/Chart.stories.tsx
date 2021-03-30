@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react'
 import { Story, Meta } from '@storybook/react/types-6-0'
 
-import { Chart, ChartProps, Data, Tip } from './'
+import { Chart, ChartProps, Data } from './'
 
 export default {
   title: 'ChartCSS/Chart',
@@ -121,11 +121,8 @@ WithReversedDataAndDatasets.args = {
 export const WithToolTip: Story<ChartProps> = ({ ...args }) => (
   <Chart {...args}>
     <tr>
-      <Data size='calc(45/100)'>
+      <Data size='calc(45/100)' toolTip='with a tool tip'>
         $45K
-        <Tip>
-          with a<br /> tool tip
-        </Tip>
       </Data>
     </tr>
   </Chart>
