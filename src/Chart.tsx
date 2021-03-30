@@ -32,6 +32,18 @@ export interface IChartProps extends React.HTMLAttributes<HTMLTableElement> {
    */
   heading?: string
   /**
+   * Hide data from view but not screen readers
+   *
+   * Expects data to be in span element.
+   *
+   * https://chartscss.org/components/data/
+   */
+  hideData?: boolean
+  /**
+   * Display hidden data on hover
+   */
+  showDataOnHover?: boolean
+  /**
    * True when the table contains many `<td>` tags in a `<tr>`.
    */
   multiple?: boolean
@@ -117,6 +129,8 @@ export interface ChartProps extends IChartProps {}
 export const Chart: React.FC<ChartProps> = ({
   type = 'bar',
   heading,
+  hideData,
+  showDataOnHover,
   multiple,
   reverse,
   reverseData,
@@ -145,6 +159,8 @@ export const Chart: React.FC<ChartProps> = ({
   if (spacing) variations.push(`data-spacing-${spacing}`)
   if (datasetSpacing) variations.push(`dataset-spacing-${datasetSpacing}`)
   if (heading) variations.push('show-heading')
+  if (hideData) variations.push('hide-data')
+  if (showDataOnHover) variations.push('show-data-on-hover')
   if (stacked) variations.push('stacked') // should we check for chart type?
   // construct variant
   const variant: string = variations.join(' ')
