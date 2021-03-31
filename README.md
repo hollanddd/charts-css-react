@@ -1,11 +1,20 @@
-# Charts.css React
+# Charts.css for React
 
-A light wrapper of react components for [chartscss](https://chartscss.org). This
-library attempts to create utility components around the framework.
+<img src="https://charts-css-react.github.io/docs/assets/image/logo-animation.svg" width="125"/>
+
+React components for [chartscss](https://chartscss.org).
+
+![Version](https://badgen.net/npm/v/charts-css-react)
 
 ## Install
 
+### Npm
+
 `npm i charts-css-react`
+
+### Yarn
+
+`yarn add charts-css-react`
 
 ## Motivation
 
@@ -18,20 +27,27 @@ For details on using the css utility framework please see the Charts.css
 
 ### Chart
 
-The base for all charts. It is possible to create charts by hand using the
-following example. The default chart is a bar chart.
+The base component for charts. It's possible to create any of the
+[supported](https://chartscss.org/development/roadmap/) charts.
+
+> Charts.css is a modern CSS framework. It uses CSS utility classes to style
+> HTML elements as charts.
+
+The Chart component raises those utility classes to a component and relies on
+naive logic to apply them. The intent is to surface the underlying framework to 
+build higher level components for simple convenience if needed. _Experimental_
 
 ```typescript
 import { CSSProperties } from 'react';
 import { Chart } from 'hollanddd/chart-css-react';
 
-<Chart>
+<Chart hideData showDataOnHover>
   <tr>
-    <th scope="row">Four</th>
+    <th scope="row">Example</th>
     <td style={{"--size": "calc(90/100)"} as CSSProperties }>$90K</td>
   </tr>
   <tr>
-    <th scope="row">Five</th>
+    <th scope="row">Example</th>
     <td>$100K</td>
   </tr>
 </Chart>
@@ -40,13 +56,13 @@ import { Chart } from 'hollanddd/chart-css-react';
 ### Higher Order Chart Component
 
 Bar, column, area, and line chart higher order components are available for
-building charts from a data object
+building charts from a data object.
 
 ```typescript
 <Bar data={[40, 60, 75, 80, 100]} />
 ```
 
-Providing a matrix automatically creates a multiple chart
+Providing a matrix automatically applies the multiple utility class.
 
 ```typescript
 <Area data={[[40, 60], [75, 80]]} />
@@ -75,9 +91,17 @@ import { Chart, Data } from 'hollanddd/chart-css-react';
 </Chart>
 ```
 
-It's possible to use the data component with the `area` and `line` chart type.
+The `AreaChart` and `LineChart` components abstract away the need to write table
+row and data cell elements.
 
-- `start` defines starting point of attribute
+```typescript
+
+import { AreaChart } from 'hollanddd/chart-css-react';
+
+<Area data={[2, 4, 8, 6, 1, 3]} />
+```
+
+_Same example but using the base `Chart` component_
 
 ```typescript
 import { Chart, Data } from 'hollanddd/chart-css-react';
@@ -101,35 +125,8 @@ import { Chart, Data } from 'hollanddd/chart-css-react';
 </Chart>
 ```
 
-### Usage Example from Docs
+## License
 
-```typescript
-import { CSSProperties } from 'react';
-import { Chart, Legend, Header } from 'hollanddd/chart-css-react';
+**Charts.CSS React** and **Charts.CSS** are licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-<div id="my-chart">
-  <Legend labels={['Gold', 'Silver', 'Bronze']}/>
-  <Chart heading="My Chart Heading">
-    <Header labels={['Country', 'Gold', 'Silver', 'Bronze']} />
-    <tr>
-      <th scope="row">USA</th>
-      <td>46</td>
-      <td>37</td>
-      <td>48</td>
-    </tr>
-    <tr>
-      <th scope="row">GBR</th>
-      <td>27</td>
-      <td>23</td>
-      <td>17</td>
-    </tr>
-    <tr>
-      <th scope="row">CHN</th>
-      <td>27</td>
-      <td>23</td>
-      <td>17</td>
-    </tr>
-  </Chart>
-</div>
-```
-
+**Charts.CSS React** is not affiliated with the creators of **Charts.CSS**.
