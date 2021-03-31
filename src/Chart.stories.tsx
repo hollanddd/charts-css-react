@@ -4,7 +4,7 @@ import { Story, Meta } from '@storybook/react/types-6-0'
 import { Chart, ChartProps, Data } from './'
 
 export default {
-  title: 'ChartCSS/Chart',
+  title: 'ChartBase',
   component: Chart,
   argTypes: {
     header: {
@@ -129,6 +129,12 @@ export const WithToolTip: Story<ChartProps> = ({ ...args }) => (
 )
 WithToolTip.args = {}
 
+export const Stacked = WithReversedDatasets.bind({})
+Stacked.args = {
+  multiple: true,
+  stacked: true
+}
+
 export const ColumnChart = Default.bind({})
 ColumnChart.args = { type: 'column', style: { height: '200px' } }
 
@@ -173,3 +179,28 @@ export const LineChart: Story<ChartProps> = ({ ...args }) => (
   </Chart>
 )
 LineChart.args = { type: 'line', style: { height: '200px' } }
+
+export const MultipleAreaChart: Story<ChartProps> = ({ ...args }) => (
+  <Chart {...args}>
+    <tr>
+      <Data start='0.1' size='0.5' />
+      <Data start='0.0' size='0.2' />
+      <Data start='0.2' size='0.4' />
+    </tr>
+    <tr>
+      <Data start='0.5' size='0.8' />
+      <Data start='0.2' size='0.5' />
+      <Data start='0.4' size='0.1' />
+    </tr>
+    <tr>
+      <Data start='0.8' size='0.4' />
+      <Data start='0.5' size='0.3' />
+      <Data start='0.1' size='0.2' />
+    </tr>
+  </Chart>
+)
+MultipleAreaChart.args = {
+  type: 'area',
+  multiple: true,
+  style: { height: '200px' }
+}

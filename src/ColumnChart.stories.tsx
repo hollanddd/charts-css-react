@@ -1,11 +1,11 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react/types-6-0'
 
-import { BarChart, BarChartProps } from './'
+import { ColumnChart, ColumnChartProps } from './'
 
 export default {
-  title: 'BarChart',
-  component: BarChart,
+  title: 'ColumnChart',
+  component: ColumnChart,
   argTypes: {
     stacked: {
       defaultValue: false
@@ -13,8 +13,8 @@ export default {
   }
 } as Meta
 
-export const Default: Story<BarChartProps> = ({ ...args }) => (
-  <BarChart {...args} />
+export const Default: Story<ColumnChartProps> = ({ ...args }) => (
+  <ColumnChart hideData {...args} style={{ height: '200px' }} />
 )
 Default.args = {
   data: [40, 60, 75, 90, 100]

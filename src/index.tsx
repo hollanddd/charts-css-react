@@ -1,1 +1,5 @@
 export * from './Chart'
+export * from './AreaChart'
+export * from './BarChart'
+export * from './ColumnChart'
+export * from './LineChart'

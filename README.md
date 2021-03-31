@@ -37,6 +37,21 @@ import { Chart } from 'hollanddd/chart-css-react';
 </Chart>
 ```
 
+### Higher Order Chart Component
+
+Bar, column, area, and line chart higher order components are available for
+building charts from a data object
+
+```typescript
+<Bar data={[40, 60, 75, 80, 100]} />
+```
+
+Providing a matrix automatically creates a multiple chart
+
+```typescript
+<Area data={[[40, 60], [75, 80]]} />
+```
+
 ### Data Component
 
 The `Data` component is a wrapper around `td` and performs some functions such
