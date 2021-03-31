@@ -1,6 +1,6 @@
 # Charts.css for React
 
-<img src="https://charts-css-react.github.io/docs/assets/image/logo-animation.svg" width="125"/>
+<img src="https://github.com/hollanddd/charts-css-react/blob/main/docs/assets/images/logo-animation.svg" width="125"/>
 
 React components for [chartscss](https://chartscss.org).
 
@@ -59,13 +59,13 @@ Bar, column, area, and line chart higher order components are available for
 building charts from a data object.
 
 ```typescript
-<Bar data={[40, 60, 75, 80, 100]} />
+<BarChart data={[40, 60, 75, 80, 100]} />
 ```
 
 Providing a matrix automatically applies the multiple utility class.
 
 ```typescript
-<Area data={[[40, 60], [75, 80]]} />
+<AreaChart data={[[40, 60], [75, 80]]} />
 ```
 
 ### Data Component
@@ -95,10 +95,9 @@ The `AreaChart` and `LineChart` components abstract away the need to write table
 row and data cell elements.
 
 ```typescript
-
 import { AreaChart } from 'hollanddd/chart-css-react';
 
-<Area data={[2, 4, 8, 6, 1, 3]} />
+<AreaChart data={[2, 4, 8, 6, 1, 3]} />
 ```
 
 _Same example but using the base `Chart` component_
